@@ -1,10 +1,11 @@
 import React from 'react'
-import { useFormContext, Controller } from 'react-hook-form';
+import { useForm , Controller} from 'react-hook-form';
 import { TextField, Grid } from '@material-ui/core';
+
 
 const FormInput = ({ name, label }) => {
 
-    const { control } = useFormContext();
+    const { control } = useForm ();
     const isError = false;
     
   return (

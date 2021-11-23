@@ -17,24 +17,30 @@ const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCart
 
   const FilledCart = () => !isLoading ? (
     <>
-    <Grid container spacing={3}>
+    <Grid container spacing={4}  xs={12} sm={12} >
+      <Grid container  spacing={4} item xs={8} sm={10}>
         {cart.line_items.map((item) => (
-          <Grid item xs={12} sm={4} key={item.id}>
+          <Grid item xs={12} sm={5} key={item.id}>
             <CartItem item={item} onUpdateCartQty={handleUpdateCartQty} onRemoveFromCart={handleRemoveFromCart} />
           </Grid>
         ))}
-    </Grid>
-
-    <div className={classes.cardDetails}>
+      </Grid>
+      <Grid xs={4} sm={2}>
+         <div className={classes.cardDetails}>
 
     <Typography variant="h4">Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>
 
-        <div>
-          <Button className={classes.emptyButton} size="large" type="button" variant="contained" color="secondary" onClick={handleEmptyCart}>Empty cart</Button>
-          <Button component={Link} to="/checkout" className={classes.checkoutButton} size="large" type="button" variant="contained" color="primary">Checkout</Button>
-        </div>
+          <Button style={{ marginTop:"12px"}} size="large" type="button" variant="contained" color="secondary" onClick={handleEmptyCart}>Empty cart</Button>
+
+          
+          <Button style={{color:"white", marginTop:"10px"}} component={Link} to="/checkout" className={classes.checkoutButton} size="large" type="button" variant="contained" color="primary">Checkout</Button>
+       
 
     </div>
+      </Grid>
+    </Grid>
+
+   
     </>
 
   ) : (

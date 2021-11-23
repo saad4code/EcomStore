@@ -1,12 +1,19 @@
-import React from 'react'
-import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import React, { useState ,useEffect} from 'react'
+import { Card, CardMedia, CardContent, CardActions, Typography, IconButton, CircularProgress } from '@material-ui/core';
 import { AddShoppingCart } from '@material-ui/icons';
 import useStyles from './style';
 
-const Product = ({ product, onAddToCart }) => {
+const Product = ({ product, onAddToCart, cartLoading }) => {
+	const [currentClicked, setCurrentClicked] = useState(``);
 
-   const classes = useStyles();
+  useEffect(() => {
+    if(!cartLoading){
+      setCurrentClicked(``)
+    }
+  }, [cartLoading])
 
+  const classes = useStyles();
+ console.log(currentClicked )
   return (
       <Card className={classes.root}>
         
@@ -27,12 +34,26 @@ const Product = ({ product, onAddToCart }) => {
         </CardContent>
 
         <CardActions disableSpacing className={classes.cardActions}>
-          <IconButton aria-label="Add to Cart" onClick={() => onAddToCart(product.id, 1)}>
-            <AddShoppingCart />
-          </IconButton>
+         {
+          currentClicked !== product.id ? (
+            
+           <IconButton aria-label="Add to Cart" onClick={() => {
+             setCurrentClicked(product.id)
+             onAddToCart(product.id, 1)}}>
+              <AddShoppingCart />   
+           </IconButton>
+          ): (
+             <div className={classes.spinner}>
+              <CircularProgress />
+             </div>
+            
+          )
+        }
+          
+         
         </CardActions>
       </Card>
-  )
+      )
 }
 
 export default Product

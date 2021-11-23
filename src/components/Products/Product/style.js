@@ -17,4 +17,9 @@ export default makeStyles(() => ({
 		display: "flex",
 		justifyContent: "space-between",
 	},
+	spinner: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+	},
 }));

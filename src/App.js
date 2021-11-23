@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { commerce } from "./lib/commerce";
-import { Products, Navbar, Cart, Checkout } from "./components";
+import { Products, Navbar, Cart, Checkout, Slider } from "./components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const App = () => {
@@ -9,10 +9,20 @@ const App = () => {
 	const [order, setOrder] = useState({});
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [proLoading, setproLoading] = useState(false);
+	const [cartLoading, setcartLoading] = useState(false);
 
 	const fetchProducts = async () => {
-		const { data } = await commerce.products.list();
-		setProducts(data);
+		setproLoading(true);
+		try {
+			const { data } = await commerce.products.list();
+
+			setProducts(data);
+			setproLoading(false);
+		} catch (error) {
+			console.log(error);
+			setproLoading(false);
+		}
 	};
 
 	const fetchCart = async () => {
@@ -20,8 +30,19 @@ const App = () => {
 	};
 
 	const handleAddToCart = async (productId, quantity) => {
-		const { cart } = await commerce.cart.add(productId, quantity);
-		setCart(cart);
+		setcartLoading(true);
+		try {
+			const { cart } = await commerce.cart.add(
+				productId,
+				quantity
+			);
+			setCart(cart);
+			setcartLoading(false);
+			console.log(`click`);
+		} catch (error) {
+			console.log(error);
+			setcartLoading(false);
+		}
 	};
 
 	const handleUpdateCartQty = async (productId, quantity) => {
@@ -78,17 +99,23 @@ const App = () => {
 	return (
 		<Router>
 			<div>
-				<Navbar totalItems={cart.total_items} />
-
 				<Switch>
 					<Route exact path="/">
+						<Slider />
+					</Route>
+					<Route exact path="/Products">
+						<Navbar
+							totalItems={cart.total_items}
+						/>
 						<Products
 							products={products}
 							onAddToCart={handleAddToCart}
+							proLoading={proLoading}
+							cartLoading={cartLoading}
 						/>
 					</Route>
 
-					<Route exact path="/cart">
+					<Route exact path="/Cart">
 						<Cart
 							cart={cart}
 							handleUpdateCartQty={
@@ -104,7 +131,7 @@ const App = () => {
 						/>
 					</Route>
 
-					<Route exact path="/checkout">
+					<Route exact path="/Checkout">
 						<Checkout
 							cart={cart}
 							order={order}
