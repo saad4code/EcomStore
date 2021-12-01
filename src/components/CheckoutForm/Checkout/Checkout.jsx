@@ -40,7 +40,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 			}
 		};
 		generateToken();
-	}, [cart]);
+	}, [cart]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const nextStep = () =>
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
