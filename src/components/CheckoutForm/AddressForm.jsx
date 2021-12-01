@@ -76,7 +76,7 @@ export const AddressForm = ({ checkoutToken, next }) => {
 
   useEffect(() => {
     fetchShippingCountries(checkoutToken.id);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (shippingCountry) fetchSubdivisions(shippingCountry);
@@ -89,7 +89,7 @@ export const AddressForm = ({ checkoutToken, next }) => {
         shippingCountry,
         shippingSubdivision
       );
-  }, [shippingSubdivision]);
+  }, [shippingSubdivision]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const timeout = () => {
     setTimeout(() => {
