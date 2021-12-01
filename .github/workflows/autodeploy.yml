@@ -20,7 +20,7 @@ jobs:
           cmd: install
           
       - name: Creating build
-        run: sudo yarn build
+        run: sudo yarn build - SLUG=$(echo ${CI_BUILD_REFNAME} | sed 's/[^a-zA-Z0-9-]/-/g ; s/-+/-/g')
           
       - name: installing surge
         run: npm install -g surge
