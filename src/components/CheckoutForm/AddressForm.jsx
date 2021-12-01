@@ -223,7 +223,7 @@ export const AddressForm = ({ checkoutToken, next }) => {
 //   props.fun(`test`)
 
 //   return(
-//      nul
+//      null
 //   )
 
 // }
