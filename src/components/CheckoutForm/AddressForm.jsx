@@ -26,6 +26,7 @@ export const AddressForm = ({ checkoutToken, next }) => {
   const [isFinished, setIsFinished] = useState(false);
   const methods = useForm();
   const classes = useStyles();
+  const [isMounted, setIsMounted] = useState(false); // asynchronous tasks in a useEffect cleanup function.
 
   const countries = Object.entries(shippingCountries).map(([code, name]) => ({
     id: code,
@@ -73,22 +74,31 @@ export const AddressForm = ({ checkoutToken, next }) => {
     setShippingOptions(options);
     setShippingOption(options[0].id);
   };
-
   useEffect(() => {
+
+    console.log(isMounted)
+    setIsMounted(true);
     fetchShippingCountries(checkoutToken.id);
+    return () => {
+      setIsMounted(false)
+    }
+
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (shippingCountry) fetchSubdivisions(shippingCountry);
+    if (shippingCountry) {
+      fetchSubdivisions(shippingCountry)
+    };
   }, [shippingCountry]);
 
   useEffect(() => {
-    if (shippingSubdivision)
+    if (shippingSubdivision) {
       fetchShippingOptions(
         checkoutToken.id,
         shippingCountry,
         shippingSubdivision
       );
+    }
   }, [shippingSubdivision]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const timeout = () => {
@@ -130,14 +140,14 @@ export const AddressForm = ({ checkoutToken, next }) => {
           )}
         >
           <Grid container spacing={3}>
-            <FormInput name='firstName' label='First name' />
-            <FormInput name='lastName' label='Last name' />
-            <FormInput name='address1' label='Address line 1' />
+            <FormInput name='firstName' label='First Name' />
+            <FormInput name='lastName' label='Last Name' />
+            <FormInput name='address1' label='Address Line 1' />
             {/* <FormInput name="email" label="Email" type="email" /> */}
             <Grid item xs={12} sm={6}>
               <TextField
                 className={classes1.root}
-                label='email'
+                label='Email'
                 required
                 type='email'
                 onChange={(e) => setNewEmail(e.target.value)}
