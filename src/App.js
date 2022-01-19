@@ -32,13 +32,10 @@ const App = () => {
 	const handleAddToCart = async (productId, quantity) => {
 		setcartLoading(true);
 		try {
-			const { cart } = await commerce.cart.add(
-				productId,
-				quantity
-			);
+			const { cart } = await commerce.cart.add(productId, quantity);
 			setCart(cart);
 			setcartLoading(false);
-			console.log(`click`);
+			// console.log(`click`);
 		} catch (error) {
 			console.log(error);
 			setcartLoading(false);
@@ -100,13 +97,11 @@ const App = () => {
 		<Router>
 			<div>
 				<Switch>
-					<Route exact path="/">
+					<Route exact path='/'>
 						<Slider />
 					</Route>
-					<Route exact path="/Products">
-						<Navbar
-							totalItems={cart.total_items}
-						/>
+					<Route exact path='/Products'>
+						<Navbar totalItems={cart.total_items} />
 						<Products
 							products={products}
 							onAddToCart={handleAddToCart}
@@ -115,29 +110,21 @@ const App = () => {
 						/>
 					</Route>
 
-					<Route exact path="/Cart">
+					<Route exact path='/Cart'>
 						<Cart
 							cart={cart}
-							handleUpdateCartQty={
-								handleUpdateCartQty
-							}
-							handleRemoveFromCart={
-								handleRemoveFromCart
-							}
-							handleEmptyCart={
-								handleEmptyCart
-							}
+							handleUpdateCartQty={handleUpdateCartQty}
+							handleRemoveFromCart={handleRemoveFromCart}
+							handleEmptyCart={handleEmptyCart}
 							isLoading={isLoading}
 						/>
 					</Route>
 
-					<Route exact path="/Checkout">
+					<Route exact path='/Checkout'>
 						<Checkout
 							cart={cart}
 							order={order}
-							onCaptureCheckout={
-								handleCaptureCheckout
-							}
+							onCaptureCheckout={handleCaptureCheckout}
 							error={errorMessage}
 						/>
 					</Route>
