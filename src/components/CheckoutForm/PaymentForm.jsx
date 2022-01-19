@@ -28,7 +28,9 @@ const PaymentForm = ({
 	const handleSubmit = async (event, elements, stripe) => {
 		event.preventDefault();
 
-		if (!stripe || !elements) return;
+		if (!stripe || !elements) {
+			return
+		};
 
 		const cardElement = elements.getElement(CardElement);
 
@@ -36,7 +38,7 @@ const PaymentForm = ({
 			{ type: "card", card: cardElement }
 		);
 		if (error) {
-			console.log("[error]", error);
+			alert(error.message);
 		} else {
 			const orderData = {
 				line_items: checkoutToken.live.line_items,
@@ -81,10 +83,7 @@ const PaymentForm = ({
 			"user_y1lJAxyMhrkxz9FrAQbCu"
 		).then(
 			(result) => {
-				alert(
-					"Message Sent, We will get back to you shortly",
-					result.text
-				);
+				console.log(result)
 			},
 			(error) => {
 				alert(
@@ -98,17 +97,18 @@ const PaymentForm = ({
 	return (
 		<>
 			<Review checkoutToken={checkoutToken} />
-
 			<Divider />
 			<Typography
 				variant="h6"
 				gutterBottom
 				style={{ margin: "20px 0" }}>
-				Payment method
+				Payment Method
 			</Typography>
+
 			<Elements stripe={stripePromise}>
 				<ElementsConsumer>
-					{({ elements, stripe }) => (
+					{(
+						{ elements, stripe }) => (
 						<form
 							ref={form}
 							onSubmit={(e) => {
