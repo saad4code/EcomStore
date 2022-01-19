@@ -140,7 +140,7 @@ export const AddressForm = ({ checkoutToken, next }) => {
           )}
         >
           <Grid container spacing={3}>
-            <FormInput name='firstName' label='First Nam' />
+            <FormInput name='firstName' label='First Name' />
             <FormInput name='lastName' label='Last Name' />
             <FormInput name='address1' label='Address Line 1' />
             {/* <FormInput name="email" label="Email" type="email" /> */}
